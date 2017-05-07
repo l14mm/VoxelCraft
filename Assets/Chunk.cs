@@ -54,10 +54,38 @@ public class Chunk : MonoBehaviour {
             world.SetBlock(pos.x + x, pos.y + y, pos.z + z, block);
         }
     }
+    void CheckForSand()
+    {
+        MeshData meshData = new MeshData();
+        for (int x = 0; x < chunkSize; x++)
+        {
+            for (int y = 0; y < chunkSize; y++)
+            {
+                for (int z = 0; z < chunkSize; z++)
+                {
+                    if (blocks[x, y, z].isSand)
+                    {
+                        //Vector3 chunkLocation = new Vector3(pos.x, pos.y, pos.z);
+                        //Vector3 blockLocation = chunkLocation + new Vector3(x, y, z);
+
+                        // If block below sand is air, fall down
+                        if (blocks[x, y - 1, z].isAir)
+                        {
+                            SetBlock(x, y, z, new BlockAir());
+                            SetBlock(x, y - 1, z, new BlockSand());
+                        }
+                    }
+                    meshData = blocks[x, y, z].Blockdata(this, x, y, z, meshData);
+                }
+            }
+        }
+        RenderMesh(meshData);
+    }
     // Updates the chunk based on its contents
     void UpdateChunk()
     {
         rendered = true;
+        CheckForSand();
         MeshData meshData = new MeshData();
         for (int x = 0; x < chunkSize; x++)
         {
@@ -66,24 +94,6 @@ public class Chunk : MonoBehaviour {
                 for (int z = 0; z < chunkSize; z++)
                 {
                     meshData = blocks[x, y, z].Blockdata(this, x, y, z, meshData);
-                    if(blocks[x, y, z].isSand)
-                    {
-                        //Vector3 chunkLocation = new Vector3(pos.x, pos.y, pos.z);
-                        //Vector3 blockLocation = chunkLocation + new Vector3(x, y, z);
-
-                        // If block below sand is air, fall down
-                        if (blocks[x, y - 1, z].isAir)
-                        {
-                            // Count how many blocks are empty below the sand
-                            int count = 1;
-                            while (blocks[x, y - count, z].isAir)
-                                count++;
-
-                            Debug.Log("there are " + (count - 1) + " empty blocks below the sand block");
-                            SetBlock(x, y, z, new BlockAir());
-                            SetBlock(x, y - (count - 1), z, new BlockSand());
-                        }
-                    }
                 }
             }
         }
