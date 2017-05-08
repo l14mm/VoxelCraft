@@ -16,12 +16,13 @@ public static class EditTerrain
     }
     public static WorldPos GetBlockPos(RaycastHit hit, bool adjacent = false)
     {
+        // Returns world hit point on block
+        //Debug.DrawRay(hit.point, hit.normal * 1, Color.red, 5);
         Vector3 pos = new Vector3(
             MoveWithinBlock(hit.point.x, hit.normal.x, adjacent),
             MoveWithinBlock(hit.point.y, hit.normal.y, adjacent),
             MoveWithinBlock(hit.point.z, hit.normal.z, adjacent)
             );
-
         return GetBlockPos(pos);
     }
     static float MoveWithinBlock(float pos, float norm, bool adjacent = false)
@@ -49,6 +50,21 @@ public static class EditTerrain
         WorldPos pos = GetBlockPos(hit, adjacent);
 
         chunk.world.SetBlock(pos.x, pos.y, pos.z, block);
+
+        return true;
+    }
+    public static bool SetSideBlock(RaycastHit hit, Block block, bool adjacent = false)
+    {
+        Chunk chunk = hit.collider.GetComponent<Chunk>();
+        if (chunk == null)
+            return false;
+
+        WorldPos pos = GetBlockPos(hit, adjacent);
+
+        // Check if side block is air, then set
+        if (chunk.world.GetBlock(pos.x + (int)hit.normal.x, pos.y + (int)hit.normal.y, pos.z + (int)hit.normal.z) is BlockAir)
+            chunk.world.SetBlock(pos.x + (int)hit.normal.x, pos.y + (int)hit.normal.y, pos.z + (int)hit.normal.z, block);
+        
 
         return true;
     }

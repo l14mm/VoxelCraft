@@ -10,6 +10,7 @@ public class Chunk : MonoBehaviour {
     public Block[,,] blocks = new Block[chunkSize, chunkSize, chunkSize];
     public static int chunkSize = 16;
     public bool update = false;
+    private bool updating = false;
     public World world;
     public WorldPos pos;
     public bool rendered;
@@ -54,8 +55,30 @@ public class Chunk : MonoBehaviour {
             world.SetBlock(pos.x + x, pos.y + y, pos.z + z, block);
         }
     }
-    void CheckForSand()
+    IEnumerator MoveSand(Block sand, int x, int y, int z)
     {
+        if (sand.moving)
+            yield break;
+        sand.moving = true;
+        yield return new WaitForSeconds(0.001f);
+        for (int i = 0; i < 10; i++)
+        {
+            yield return new WaitForSeconds(0.025f);
+            sand.y_offset -= 0.1f;
+            update = true;
+        }
+        // When sand have visually hit the ground, actually move the block
+        SetBlock(x, y, z, new BlockAir());
+        SetBlock(x, y - 1, z, new BlockSand());
+        sand.y_offset = 0;
+        sand.moving = false;
+        update = true;
+    }
+    // Updates the chunk based on its contents
+    void UpdateChunk()
+    {
+        updating = true;
+        rendered = true;
         MeshData meshData = new MeshData();
         for (int x = 0; x < chunkSize; x++)
         {
@@ -69,35 +92,18 @@ public class Chunk : MonoBehaviour {
                         //Vector3 blockLocation = chunkLocation + new Vector3(x, y, z);
 
                         // If block below sand is air, fall down
-                        if (blocks[x, y - 1, z].isAir)
+                        if (blocks[x, y - 1, z].isAir && !blocks[x, y - 1, z].moving)
                         {
-                            SetBlock(x, y, z, new BlockAir());
-                            SetBlock(x, y - 1, z, new BlockSand());
+                            StartCoroutine(MoveSand(blocks[x, y, z], x, y, z));
                         }
                     }
+
                     meshData = blocks[x, y, z].Blockdata(this, x, y, z, meshData);
                 }
             }
         }
         RenderMesh(meshData);
-    }
-    // Updates the chunk based on its contents
-    void UpdateChunk()
-    {
-        rendered = true;
-        CheckForSand();
-        MeshData meshData = new MeshData();
-        for (int x = 0; x < chunkSize; x++)
-        {
-            for (int y = 0; y < chunkSize; y++)
-            {
-                for (int z = 0; z < chunkSize; z++)
-                {
-                    meshData = blocks[x, y, z].Blockdata(this, x, y, z, meshData);
-                }
-            }
-        }
-        RenderMesh(meshData);
+        updating = false;
     }
     // Sends the calculated mesh information
     // to the mesh and collision components

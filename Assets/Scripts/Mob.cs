@@ -12,11 +12,21 @@ public class Mob : MonoBehaviour {
     private NavMeshAgent agent;
     private float timer;
 
+    public bool wander = false;
+
     // Use this for initialization
     void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
         timer = wanderTimer;
+
+        StartWandering(1);
+    }
+
+    private IEnumerator StartWandering(float time)
+    {
+        yield return new WaitForSeconds(time);
+        wander = true;
     }
 
     // Update is called once per frame
@@ -24,7 +34,7 @@ public class Mob : MonoBehaviour {
     {
         timer += Time.deltaTime;
 
-        if (timer >= wanderTimer)
+        if (timer >= wanderTimer && wander)
         {
             Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
             agent.SetDestination(newPos);
