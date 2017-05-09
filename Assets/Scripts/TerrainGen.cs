@@ -19,9 +19,9 @@ public class TerrainGen
 
     public Chunk ChunkGen(Chunk chunk)
     {
-        for (int x = chunk.pos.x - 3; x < chunk.pos.x + Chunk.chunkSize + 3; x++) //Change this line
+        for (int x = chunk.pos.x - 3; x < chunk.pos.x + Chunk.chunkSize + 3; x++)
         {
-            for (int z = chunk.pos.z - 3; z < chunk.pos.z + Chunk.chunkSize + 3; z++)//and this line
+            for (int z = chunk.pos.z - 3; z < chunk.pos.z + Chunk.chunkSize + 3; z++)
             {
                 chunk = ChunkColumnGen(chunk, x, z);
             }

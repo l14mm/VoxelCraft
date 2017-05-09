@@ -29,10 +29,14 @@ public static class Serialization
 
     public static void SaveChunk(Chunk chunk)
     {
+        chunk.SetBlocksUnmodified();
         Save save = new Save(chunk);
         if (save.blocks.Count == 0)
+        {
+            Debug.Log("no blocks");
             return;
-        
+        }
+
         string saveFile = SaveLocation(chunk.world.worldName);
         saveFile += FileName(chunk.pos);
 
@@ -40,6 +44,7 @@ public static class Serialization
         Stream stream = new FileStream(saveFile, FileMode.Create, FileAccess.Write, FileShare.None);
         formatter.Serialize(stream, save);
         stream.Close();
+        Debug.Log("saved chunk");
 
     }
     public static bool Load(Chunk chunk)

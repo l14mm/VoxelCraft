@@ -17,6 +17,15 @@ public class Chunk : MonoBehaviour {
 
     MeshFilter filter;
     MeshCollider coll;
+
+    void OnApplicationQuit()
+    {
+    }
+    public void SaveChunk()
+    {
+        //Save all chunks
+        Serialization.SaveChunk(this);
+    }
     //Use this for initialization
     void Start()
     {
@@ -29,6 +38,10 @@ public class Chunk : MonoBehaviour {
         {
             update = false;
             UpdateChunk();
+        }
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            SaveChunk();
         }
     }
     public Block GetBlock(int x, int y, int z)

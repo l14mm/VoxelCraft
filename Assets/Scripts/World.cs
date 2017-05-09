@@ -38,11 +38,19 @@ public class World : MonoBehaviour {
         newChunk.SetBlocksUnmodified();
         bool loaded = Serialization.Load(newChunk);
 
-
         newChunk.SetBlocksUnmodified();
         Serialization.Load(newChunk);
     }
-
+    /*
+    void OnApplicationQuit()
+    {
+        //Save all chunks
+        for (int i = 0; i < chunks.Count; i++)
+        {
+            Serialization.SaveChunk(chunks[i]);
+        }
+    }
+    */
     public Chunk GetChunk(int x, int y, int z)
     {
         WorldPos pos = new WorldPos();
