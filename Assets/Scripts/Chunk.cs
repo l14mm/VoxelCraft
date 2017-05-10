@@ -23,7 +23,6 @@ public class Chunk : MonoBehaviour {
     }
     public void SaveChunk()
     {
-        //Save all chunks
         Serialization.SaveChunk(this);
     }
     //Use this for initialization
@@ -41,7 +40,7 @@ public class Chunk : MonoBehaviour {
         }
         if(Input.GetKeyDown(KeyCode.S))
         {
-            SaveChunk();
+            //SaveChunk();
         }
     }
     public Block GetBlock(int x, int y, int z)

@@ -7,7 +7,7 @@ public class World : MonoBehaviour {
 	public Dictionary<WorldPos, Chunk> chunks = new Dictionary<WorldPos, Chunk>();
 	public GameObject chunkPrefab;
     public string worldName = "world";
-
+    
     public void CreateChunk(int x, int y, int z)
     {
         //the coordinates of this chunk in the world
@@ -29,17 +29,20 @@ public class World : MonoBehaviour {
         //Add it to the chunks dictionary with the position as the key
         chunks.Add(worldPos, newChunk);
 
-        //bool loaded = Serialization.Load(newChunk);
-        //if (loaded)
-        //return;
-
         var terrainGen = new TerrainGen();
         newChunk = terrainGen.ChunkGen(newChunk);
-        newChunk.SetBlocksUnmodified();
-        bool loaded = Serialization.Load(newChunk);
+        //newChunk.SetBlocksUnmodified();
+        //bool loaded = Serialization.Load(newChunk);
+        LoadChunk(newChunk);
 
-        newChunk.SetBlocksUnmodified();
-        Serialization.Load(newChunk);
+
+        //newChunk.SetBlocksUnmodified();
+        //Serialization.Load(newChunk);
+    }
+    private IEnumerator LoadChunk(Chunk chunk)
+    {
+        yield return new WaitForSeconds(0.1f);
+        bool loaded = Serialization.Load(chunk);
     }
     /*
     void OnApplicationQuit()

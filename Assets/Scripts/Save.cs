@@ -17,8 +17,8 @@ public class Save
                 for (int z = 0; z < Chunk.chunkSize; z++)
                 {
                     // Remove comments and changed blocks won't be loaded in, they will be re-generated.
-                    //if (!chunk.blocks[x, y, z].changed)
-                        //continue;
+                    if (!chunk.blocks[x, y, z].changed)
+                        continue;
 
                     WorldPos pos = new WorldPos(x, y, z);
                     blocks.Add(pos, chunk.blocks[x, y, z]);
