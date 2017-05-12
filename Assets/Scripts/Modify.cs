@@ -14,7 +14,7 @@ public class Modify : MonoBehaviour
             //if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
             if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 100))
             {
-                EditTerrain.SetBlock(hit, new BlockAir());
+                EditTerrain.SetBlock(hit, new BlockAir(), false, true);
             }
         }
         if (Input.GetMouseButtonDown(1))
@@ -25,7 +25,7 @@ public class Modify : MonoBehaviour
             {
                 //EditTerrain.SetBlock(hit, new BlockSand());
                 // Get block to the side which faces the player
-                EditTerrain.SetSideBlock(hit, new BlockSand());
+                EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
             }
         }
     }

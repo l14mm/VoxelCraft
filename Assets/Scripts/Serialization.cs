@@ -29,7 +29,7 @@ public static class Serialization
 
     public static void SaveChunk(Chunk chunk)
     {
-        chunk.SetBlocksUnmodified();
+        //chunk.SetBlocksUnmodified();
         Save save = new Save(chunk);
         if (save.blocks.Count == 0)
         {
@@ -64,6 +64,10 @@ public static class Serialization
             chunk.blocks[block.Key.x, block.Key.y, block.Key.z] = block.Value;
         }
         stream.Close();
+
+        //Once set new loaded blocks, reload the chunk to display them
+        chunk.update = true;
+
         return true;
     }
 }

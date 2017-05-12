@@ -16,7 +16,7 @@ public class Block
         return tile;
     }
 
-    public bool changed = true;
+    public bool changed = false;
     const float tileSize = 0.25f;
     public bool isSand = false;
     public float y_offset = 0;

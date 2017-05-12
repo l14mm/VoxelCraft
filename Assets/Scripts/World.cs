@@ -33,7 +33,7 @@ public class World : MonoBehaviour {
         newChunk = terrainGen.ChunkGen(newChunk);
         //newChunk.SetBlocksUnmodified();
         //bool loaded = Serialization.Load(newChunk);
-        LoadChunk(newChunk);
+        StartCoroutine(LoadChunk(newChunk));
 
 
         //newChunk.SetBlocksUnmodified();
@@ -85,14 +85,17 @@ public class World : MonoBehaviour {
         }
 
     }
-    public void SetBlock(int x, int y, int z, Block block)
+    public void SetBlock(int x, int y, int z, Block block, bool changed = false)
     {
         Chunk chunk = GetChunk(x, y, z);
 
         if (chunk != null)
         {
-            chunk.SetBlock(x - chunk.pos.x, y - chunk.pos.y, z - chunk.pos.z, block);
-            chunk.update = true;
+            chunk.SetBlock(x - chunk.pos.x, y - chunk.pos.y, z - chunk.pos.z, block, changed);
+            if (changed)
+            {
+                chunk.update = true;
+            }
 
             UpdateIfEqual(x - chunk.pos.x, 0, new WorldPos(x - 1, y, z));
             UpdateIfEqual(x - chunk.pos.x, Chunk.chunkSize - 1, new WorldPos(x + 1, y, z));

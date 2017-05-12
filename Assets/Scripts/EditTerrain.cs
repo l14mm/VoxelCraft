@@ -41,7 +41,7 @@ public static class EditTerrain
 
         return (float)pos;
     }
-    public static bool SetBlock(RaycastHit hit, Block block, bool adjacent = false)
+    public static bool SetBlock(RaycastHit hit, Block block, bool adjacent = false, bool changed = false)
     {
         Chunk chunk = hit.collider.GetComponent<Chunk>();
         if (chunk == null)
@@ -49,11 +49,14 @@ public static class EditTerrain
 
         WorldPos pos = GetBlockPos(hit, adjacent);
 
-        chunk.world.SetBlock(pos.x, pos.y, pos.z, block);
+        chunk.world.SetBlock(pos.x, pos.y, pos.z, block, changed);
+
+        if (changed)
+            chunk.SaveChunk();
 
         return true;
     }
-    public static bool SetSideBlock(RaycastHit hit, Block block, bool adjacent = false)
+    public static bool SetSideBlock(RaycastHit hit, Block block, bool adjacent = false, bool changed = false)
     {
         Chunk chunk = hit.collider.GetComponent<Chunk>();
         if (chunk == null)
@@ -63,8 +66,10 @@ public static class EditTerrain
 
         // Check if side block is air, then set
         if (chunk.world.GetBlock(pos.x + (int)hit.normal.x, pos.y + (int)hit.normal.y, pos.z + (int)hit.normal.z) is BlockAir)
-            chunk.world.SetBlock(pos.x + (int)hit.normal.x, pos.y + (int)hit.normal.y, pos.z + (int)hit.normal.z, block);
-        
+            chunk.world.SetBlock(pos.x + (int)hit.normal.x, pos.y + (int)hit.normal.y, pos.z + (int)hit.normal.z, block, changed);
+
+        if(changed)
+            chunk.SaveChunk();
 
         return true;
     }

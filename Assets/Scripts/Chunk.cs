@@ -56,11 +56,16 @@ public class Chunk : MonoBehaviour {
 
         return true;
     }
-    public void SetBlock(int x, int y, int z, Block block)
+    public void SetBlock(int x, int y, int z, Block block, bool changed = false)
     {
         if (InRange(x) && InRange(y) && InRange(z))
         {
             blocks[x, y, z] = block;
+            if(changed)
+            {
+                blocks[x, y, z].changed = changed;
+                //Debug.Log("set new block");
+            }
         }
         else
         {

@@ -20,7 +20,7 @@ public class Mob : MonoBehaviour {
         agent = GetComponent<NavMeshAgent>();
         timer = wanderTimer;
 
-        StartWandering(1);
+        StartCoroutine(StartWandering(1));
     }
 
     private IEnumerator StartWandering(float time)

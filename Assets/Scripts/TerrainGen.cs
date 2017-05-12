@@ -78,13 +78,15 @@ public class TerrainGen
     }
     float treeFrequency = 0.2f;
     int treeDensity = 3;
+
     void CreateTree(int x, int y, int z, Chunk chunk)
     {
-        //Debug.Log("created tree");
-        //create leaves
+        //Create leaves
+        int leavesHeight = Random.Range(4, 6);
+        
         for (int xi = -2; xi <= 2; xi++)
         {
-            for (int yi = 4; yi <= 8; yi++)
+            for (int yi = 4; yi <= 4 + leavesHeight; yi++)
             {
                 for (int zi = -2; zi <= 2; zi++)
                 {
@@ -92,7 +94,7 @@ public class TerrainGen
                 }
             }
         }
-        //create trunk
+        //Create trunk
         for (int yt = 0; yt < 6; yt++)
         {
             SetBlock(x, y + yt, z, new BlockWood(), chunk, true);

@@ -19,6 +19,12 @@ public class LocalNavMeshBuilder : MonoBehaviour
     NavMeshDataInstance m_Instance;
     List<NavMeshBuildSource> m_Sources = new List<NavMeshBuildSource>();
 
+    public float voxelSize = 0.10101f;
+    public int tileSize = 2;
+    public float agentClimb = 0.5f;
+    public float agentRadius = 0.5f;
+    public float agentHeight = 2;
+
     IEnumerator Start()
     {
         while (true)
@@ -48,8 +54,15 @@ public class LocalNavMeshBuilder : MonoBehaviour
     {
         NavMeshSourceTag.Collect(ref m_Sources);
         var defaultBuildSettings = NavMesh.GetSettingsByID(0);
-        defaultBuildSettings.voxelSize = 0.10101f;
-        defaultBuildSettings.tileSize = 1;
+
+        defaultBuildSettings.voxelSize = voxelSize;
+        defaultBuildSettings.tileSize = tileSize;
+        defaultBuildSettings.agentClimb = agentClimb;
+        defaultBuildSettings.agentRadius = agentRadius;
+        defaultBuildSettings.agentHeight = agentHeight;
+
+        
+
         var bounds = QuantizedBounds();
 
         if (asyncUpdate)
