@@ -18,6 +18,13 @@ public class Chunk : MonoBehaviour {
     MeshFilter filter;
     MeshCollider coll;
 
+    private struct ToDo
+    {
+        public int x, y, z;
+        public Block block;
+    }
+    Queue<ToDo> queue = new Queue<ToDo>();
+
     void OnApplicationQuit()
     {
     }
@@ -42,6 +49,12 @@ public class Chunk : MonoBehaviour {
         {
             //SaveChunk();
         }
+        if (queue.Count > 0)
+        {
+            //Debug.Log("changing block");
+            ToDo todo = queue.Dequeue();
+            blocks[todo.x, todo.y, todo.z] = todo.block;
+        }
     }
     public Block GetBlock(int x, int y, int z)
     {
@@ -61,10 +74,18 @@ public class Chunk : MonoBehaviour {
         if (InRange(x) && InRange(y) && InRange(z))
         {
             blocks[x, y, z] = block;
-            if(changed)
+            /*
+            ToDo todo = new ToDo();
+            todo.x = x;
+            todo.y = y;
+            todo.z = z;
+            todo.block = block;
+            queue.Enqueue(todo);
+            //Debug.Log("enqueued block");
+            */
+            if (changed)
             {
                 blocks[x, y, z].changed = changed;
-                //Debug.Log("set new block");
             }
         }
         else
@@ -72,6 +93,7 @@ public class Chunk : MonoBehaviour {
             world.SetBlock(pos.x + x, pos.y + y, pos.z + z, block);
         }
     }
+    
     IEnumerator MoveSand(Block sand, int x, int y, int z)
     {
         if (sand.moving)
@@ -80,7 +102,7 @@ public class Chunk : MonoBehaviour {
         yield return new WaitForSeconds(0.001f);
         for (int i = 0; i < 10; i++)
         {
-            yield return new WaitForSeconds(0.025f);
+            yield return new WaitForSeconds(0.015f);
             sand.y_offset -= 0.1f;
             update = true;
         }

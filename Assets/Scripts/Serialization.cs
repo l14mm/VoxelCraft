@@ -44,7 +44,7 @@ public static class Serialization
         Stream stream = new FileStream(saveFile, FileMode.Create, FileAccess.Write, FileShare.None);
         formatter.Serialize(stream, save);
         stream.Close();
-        Debug.Log("saved chunk");
+        //Debug.Log("saved chunk");
 
     }
     public static bool Load(Chunk chunk)

@@ -7,8 +7,22 @@ public class Modify : MonoBehaviour
     public Camera camera;
     public Animator anim;
 
+    private Block currentBlock = new BlockGrass();
+
     void Update()
     {
+        if(Input.GetKeyDown("1"))
+        {
+            currentBlock = new BlockGrass();
+        }
+        else if (Input.GetKeyDown("2"))
+        {
+            currentBlock = new BlockSand();
+        }
+        else if (Input.GetKeyDown("3"))
+        {
+            currentBlock = new BlockWood();
+        }
         if (Input.GetMouseButtonDown(0))
         {
             if (anim)
@@ -25,11 +39,12 @@ public class Modify : MonoBehaviour
         {
             RaycastHit hit;
             //if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-            if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 100))
+            if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 5))
             {
                 //EditTerrain.SetBlock(hit, new BlockSand());
                 // Get block to the side which faces the player
-                EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
+                //EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
+                EditTerrain.SetSideBlock(hit, currentBlock, false, true);
             }
         }
     }
