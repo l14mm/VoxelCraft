@@ -49,7 +49,10 @@ public class TerrainGen
             if (y <= stoneHeight && caveSize < caveChance) //Add caveSize < caveChance
             {
                 //chunk.SetBlock(x - chunk.pos.x, y - chunk.pos.y, z - chunk.pos.z, new Block());
-                SetBlock(x, y, z, new Block(), chunk);
+                if(Random.Range(0, 2) >= 1)
+                    SetBlock(x, y, z, new Block(), chunk);
+                else
+                    SetBlock(x, y, z, new BlockCoal(), chunk);
             }
             else if (y <= dirtHeight && caveSize < caveChance)
             {
