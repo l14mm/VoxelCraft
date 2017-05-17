@@ -6,6 +6,7 @@ public class Modify : MonoBehaviour
 {
     public Camera camera;
     public Animator anim;
+    public GameObject item_grass;
 
     private Block currentBlock = new BlockGrass();
 
@@ -22,6 +23,11 @@ public class Modify : MonoBehaviour
         else if (Input.GetKeyDown("3"))
         {
             currentBlock = new BlockWood();
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GameObject temp = Instantiate(item_grass, transform.position, transform.rotation);
+            temp.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, 1));
         }
         if (Input.GetMouseButtonDown(0))
         {
