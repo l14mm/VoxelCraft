@@ -7,6 +7,8 @@ public class Modify : MonoBehaviour
     public Camera camera;
     public Animator anim;
     public GameObject item_grass;
+    public GameObject _arrow;
+    public Transform arrowFirePosition;
 
     private Block currentBlock = new BlockGrass();
 
@@ -31,15 +33,8 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            if (anim)
-                anim.SetTrigger("Mine");
-               // anim.Play("Mining");
-            RaycastHit hit;
-            //if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-            if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 5))
-            {
-                EditTerrain.SetBlock(hit, new BlockAir(), false, true);
-            }
+            //Mine();
+            FireArrow();
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -52,6 +47,27 @@ public class Modify : MonoBehaviour
                 //EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
                 EditTerrain.SetSideBlock(hit, currentBlock, false, true);
             }
+        }
+    }
+
+    void FireArrow()
+    {
+        GameObject arrow = Instantiate(_arrow, arrowFirePosition.position, arrowFirePosition.rotation);
+        arrow.transform.forward = arrowFirePosition.forward;
+        float force = 10;
+        arrow.GetComponent<Rigidbody>().AddForce(arrowFirePosition.forward * force, ForceMode.Impulse);
+    }
+
+    void Mine()
+    {
+        if (anim)
+            anim.SetTrigger("Mine");
+        // anim.Play("Mining");
+        RaycastHit hit;
+        //if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 5))
+        {
+            EditTerrain.SetBlock(hit, new BlockAir(), false, true);
         }
     }
 }
