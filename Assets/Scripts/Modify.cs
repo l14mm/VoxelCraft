@@ -52,8 +52,10 @@ public class Modify : MonoBehaviour
 
     void FireArrow()
     {
-        GameObject arrow = Instantiate(_arrow, arrowFirePosition.position, arrowFirePosition.rotation);
-        arrow.transform.forward = arrowFirePosition.forward;
+        // Rotate rotation to match forward of bow
+        GameObject arrow = Instantiate(_arrow, arrowFirePosition.position, arrowFirePosition.rotation * Quaternion.Euler(0, 180, 0));
+
+        //arrow.transform.forward = arrowFirePosition.forward;
         float force = 10;
         arrow.GetComponent<Rigidbody>().AddForce(arrowFirePosition.forward * force, ForceMode.Impulse);
     }
