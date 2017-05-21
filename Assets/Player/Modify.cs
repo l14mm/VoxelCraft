@@ -28,6 +28,7 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            GetComponent<InventoryManager>().item1count--;
             GameObject temp = Instantiate(item_grass, transform.position, transform.rotation);
             temp.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, 1));
         }

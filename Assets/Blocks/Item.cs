@@ -21,7 +21,7 @@ public class Item : MonoBehaviour
     {
         if (col.gameObject.tag == "Player" && isReady)
         {
-
+            col.gameObject.GetComponent<InventoryManager>().item1count++;
             Destroy(gameObject);
         }
     }
