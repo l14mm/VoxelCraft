@@ -46,7 +46,13 @@ public class Modify : MonoBehaviour
                 //EditTerrain.SetBlock(hit, new BlockSand());
                 // Get block to the side which faces the player
                 //EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
-                EditTerrain.SetSideBlock(hit, currentBlock, false, true);
+
+                if (currentBlock == new BlockGrass() && GetComponent<InventoryManager>().item1count > 0)
+                {
+                    EditTerrain.SetSideBlock(hit, currentBlock, false, true);
+                    if (currentBlock == new BlockGrass())
+                        GetComponent<InventoryManager>().item1count--;
+                }
             }
         }
     }
