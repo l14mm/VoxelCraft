@@ -17,14 +17,17 @@ public class Modify : MonoBehaviour
         if(Input.GetKeyDown("1"))
         {
             currentBlock = new BlockGrass();
+            GetComponent<InventoryManager>().SelectItem(1);
         }
         else if (Input.GetKeyDown("2"))
         {
             currentBlock = new BlockSand();
+            GetComponent<InventoryManager>().SelectItem(2);
         }
         else if (Input.GetKeyDown("3"))
         {
             currentBlock = new BlockWood();
+            GetComponent<InventoryManager>().SelectItem(3);
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -50,8 +53,17 @@ public class Modify : MonoBehaviour
                 if (currentBlock == new BlockGrass() && GetComponent<InventoryManager>().item1count > 0)
                 {
                     EditTerrain.SetSideBlock(hit, currentBlock, false, true);
-                    if (currentBlock == new BlockGrass())
-                        GetComponent<InventoryManager>().item1count--;
+                    GetComponent<InventoryManager>().item1count--;
+                }
+                else if (currentBlock == new BlockSand() && GetComponent<InventoryManager>().item2count > 0)
+                {
+                    EditTerrain.SetSideBlock(hit, currentBlock, false, true);
+                    GetComponent<InventoryManager>().item2count--;
+                }
+                else if (currentBlock == new BlockWood() && GetComponent<InventoryManager>().item3count > 0)
+                {
+                    EditTerrain.SetSideBlock(hit, currentBlock, false, true);
+                    GetComponent<InventoryManager>().item3count--;
                 }
             }
         }
