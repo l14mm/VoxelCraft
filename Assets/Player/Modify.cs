@@ -7,6 +7,8 @@ public class Modify : MonoBehaviour
     public Camera camera;
     public Animator anim;
     public GameObject item_grass;
+    public GameObject item_sand;
+    public GameObject item_wood;
     public GameObject _arrow;
     public Transform arrowFirePosition;
 
@@ -31,9 +33,25 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            GetComponent<InventoryManager>().item1count--;
-            GameObject temp = Instantiate(item_grass, transform.position, transform.rotation);
-            temp.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, 1));
+            GameObject temp;
+            if (currentBlock is BlockGrass && GetComponent<InventoryManager>().item1count > 0)
+            {
+                temp = Instantiate(item_grass, transform.position + transform.forward, transform.rotation);
+                temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
+                GetComponent<InventoryManager>().item1count--;
+            }
+            else if (currentBlock is BlockSand && GetComponent<InventoryManager>().item2count > 0)
+            {
+                temp = Instantiate(item_sand, transform.position + transform.forward, transform.rotation);
+                temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
+                GetComponent<InventoryManager>().item2count--;
+            }
+            else if (currentBlock is BlockWood && GetComponent<InventoryManager>().item3count > 0)
+            {
+                temp = Instantiate(item_wood, transform.position + transform.forward, transform.rotation);
+                temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
+                GetComponent<InventoryManager>().item3count--;
+            }
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -49,18 +67,17 @@ public class Modify : MonoBehaviour
                 //EditTerrain.SetBlock(hit, new BlockSand());
                 // Get block to the side which faces the player
                 //EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
-
-                if (currentBlock == new BlockGrass() && GetComponent<InventoryManager>().item1count > 0)
+                if (currentBlock is BlockGrass && GetComponent<InventoryManager>().item1count > 0)
                 {
                     EditTerrain.SetSideBlock(hit, currentBlock, false, true);
                     GetComponent<InventoryManager>().item1count--;
                 }
-                else if (currentBlock == new BlockSand() && GetComponent<InventoryManager>().item2count > 0)
+                else if (currentBlock is BlockSand && GetComponent<InventoryManager>().item2count > 0)
                 {
                     EditTerrain.SetSideBlock(hit, currentBlock, false, true);
                     GetComponent<InventoryManager>().item2count--;
                 }
-                else if (currentBlock == new BlockWood() && GetComponent<InventoryManager>().item3count > 0)
+                else if (currentBlock is BlockWood && GetComponent<InventoryManager>().item3count > 0)
                 {
                     EditTerrain.SetSideBlock(hit, currentBlock, false, true);
                     GetComponent<InventoryManager>().item3count--;
