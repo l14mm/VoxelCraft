@@ -11,6 +11,7 @@ public class Modify : MonoBehaviour
     public GameObject item_wood;
     public GameObject _arrow;
     public Transform arrowFirePosition;
+    private float arrowCharge = 0;
 
     private Block currentBlock = new BlockGrass();
 
@@ -53,7 +54,12 @@ public class Modify : MonoBehaviour
                 GetComponent<InventoryManager>().item3count--;
             }
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
+        {
+            //Mine();
+            ChargeArrow();
+        }
+        if (Input.GetMouseButtonUp(0))
         {
             //Mine();
             FireArrow();
@@ -86,13 +92,18 @@ public class Modify : MonoBehaviour
         }
     }
 
+    void ChargeArrow()
+    {
+        arrowCharge += 0.05f;
+    }
+
     void FireArrow()
     {
         // Rotate rotation to match forward of bow
         GameObject arrow = Instantiate(_arrow, arrowFirePosition.position, arrowFirePosition.rotation * Quaternion.Euler(0, 180, 0));
-
-        //arrow.transform.forward = arrowFirePosition.forward;
-        float force = 10;
+        
+        float force = 5 * arrowCharge;
+        arrowCharge = 0;
         arrow.GetComponent<Rigidbody>().AddForce(arrowFirePosition.forward * force, ForceMode.Impulse);
     }
 

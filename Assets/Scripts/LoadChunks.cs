@@ -7,6 +7,7 @@ public class LoadChunks : MonoBehaviour
     List<WorldPos> updateList = new List<WorldPos>();
     List<WorldPos> buildList = new List<WorldPos>();
     int timer = 0;
+    public float speed = 0.05f;
 
     static WorldPos[] chunkPositions = {   new WorldPos( 0, 0,  0), new WorldPos(-1, 0,  0), new WorldPos( 0, 0, -1), new WorldPos( 0, 0,  1), new WorldPos( 1, 0,  0),
                              new WorldPos(-1, 0, -1), new WorldPos(-1, 0,  1), new WorldPos( 1, 0, -1), new WorldPos( 1, 0,  1), new WorldPos(-2, 0,  0),
@@ -121,6 +122,9 @@ public class LoadChunks : MonoBehaviour
             //If chunks were built return early
             return;
         }
+        //Debug.Log("deltatime:" + Time.deltaTime);
+        if (Time.deltaTime < speed)
+            return;
         if (updateList.Count != 0)
         {
             Chunk chunk = world.GetChunk(updateList[0].x, updateList[0].y, updateList[0].z);
