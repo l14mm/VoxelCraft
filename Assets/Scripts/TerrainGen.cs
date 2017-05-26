@@ -40,7 +40,8 @@ public class TerrainGen
             stoneHeight = Mathf.FloorToInt(stoneMinHeight);
         stoneHeight += GetNoise(x, 0, z, stoneBaseNoise, Mathf.FloorToInt(stoneBaseNoiseHeight));
         int dirtHeight = stoneHeight + Mathf.FloorToInt(dirtBaseHeight);
-        dirtHeight += GetNoise(x, 100, z, dirtNoise, Mathf.FloorToInt(dirtNoiseHeight));
+        // 50 - 100
+        dirtHeight += GetNoise(x, 50, z, dirtNoise, Mathf.FloorToInt(dirtNoiseHeight));
         //for (int y = chunk.pos.y; y < chunk.pos.y + Chunk.chunkSize; y++)
         for (int y = chunk.pos.y - 8; y < chunk.pos.y + Chunk.chunkSize; y++)
         {
@@ -49,7 +50,7 @@ public class TerrainGen
             if (y <= stoneHeight && caveSize < caveChance) //Add caveSize < caveChance
             {
                 //chunk.SetBlock(x - chunk.pos.x, y - chunk.pos.y, z - chunk.pos.z, new Block());
-                if(Random.Range(0, 2) >= 1)
+                if(Random.Range(0, 4) >= 1)
                     SetBlock(x, y, z, new Block(), chunk);
                 else
                     SetBlock(x, y, z, new BlockCoal(), chunk);
