@@ -41,6 +41,21 @@ public static class EditTerrain
 
         return (float)pos;
     }
+    public static bool SetBlockItemDrop(RaycastHit hit, Block block, bool adjacent = false, bool changed = false)
+    {
+        Chunk chunk = hit.collider.GetComponent<Chunk>();
+        if (chunk == null)
+            return false;
+
+        WorldPos pos = GetBlockPos(hit, adjacent);
+
+        chunk.world.SetBlockItemDrop(pos.x, pos.y, pos.z, block, changed);
+
+        if (changed)
+            chunk.SaveChunk();
+
+        return true;
+    }
     public static bool SetBlock(RaycastHit hit, Block block, bool adjacent = false, bool changed = false)
     {
         Chunk chunk = hit.collider.GetComponent<Chunk>();

@@ -56,7 +56,7 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            //Mine();
+            Mine();
             ChargeArrow();
         }
         if (Input.GetMouseButtonUp(0))
@@ -116,7 +116,9 @@ public class Modify : MonoBehaviour
         //if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
         if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 5))
         {
-            EditTerrain.SetBlock(hit, new BlockAir(), false, true);
+            Vector3 pos = new Vector3(EditTerrain.GetBlockPos(hit).x, EditTerrain.GetBlockPos(hit).y, EditTerrain.GetBlockPos(hit).z);
+            EditTerrain.SetBlockItemDrop(hit, new BlockAir(), false, true);
+            Instantiate(item_grass, pos, Quaternion.identity);
         }
     }
 }

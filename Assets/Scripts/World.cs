@@ -85,6 +85,26 @@ public class World : MonoBehaviour {
         }
 
     }
+    public void SetBlockItemDrop(int x, int y, int z, Block block, bool changed = false)
+    {
+        Chunk chunk = GetChunk(x, y, z);
+
+        if (chunk != null)
+        {
+            chunk.SetBlockItemDrop(x - chunk.pos.x, y - chunk.pos.y, z - chunk.pos.z, block, changed);
+            if (changed)
+            {
+                chunk.update = true;
+            }
+
+            UpdateIfEqual(x - chunk.pos.x, 0, new WorldPos(x - 1, y, z));
+            UpdateIfEqual(x - chunk.pos.x, Chunk.chunkSize - 1, new WorldPos(x + 1, y, z));
+            UpdateIfEqual(y - chunk.pos.y, 0, new WorldPos(x, y - 1, z));
+            UpdateIfEqual(y - chunk.pos.y, Chunk.chunkSize - 1, new WorldPos(x, y + 1, z));
+            UpdateIfEqual(z - chunk.pos.z, 0, new WorldPos(x, y, z - 1));
+            UpdateIfEqual(z - chunk.pos.z, Chunk.chunkSize - 1, new WorldPos(x, y, z + 1));
+        }
+    }
     public void SetBlock(int x, int y, int z, Block block, bool changed = false)
     {
         Chunk chunk = GetChunk(x, y, z);

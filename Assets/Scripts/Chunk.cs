@@ -18,6 +18,10 @@ public class Chunk : MonoBehaviour {
     MeshFilter filter;
     MeshCollider coll;
 
+    public GameObject item_grass;
+    public GameObject item_sand;
+    public GameObject item_wood;
+
     private struct ToDo
     {
         public int x, y, z;
@@ -69,20 +73,32 @@ public class Chunk : MonoBehaviour {
 
         return true;
     }
+    public void SetBlockItemDrop(int x, int y, int z, Block block, bool changed = false)
+    {
+        if (InRange(x) && InRange(y) && InRange(z))
+        {
+            blocks[x, y, z] = block;
+
+            // Drop item of block destroyed
+            Debug.Log(x + " " + y + " " + z);
+            //Instantiate(item_grass)
+
+            if (changed)
+            {
+                blocks[x, y, z].changed = changed;
+            }
+        }
+        else
+        {
+            world.SetBlock(pos.x + x, pos.y + y, pos.z + z, block);
+        }
+    }
     public void SetBlock(int x, int y, int z, Block block, bool changed = false)
     {
         if (InRange(x) && InRange(y) && InRange(z))
         {
             blocks[x, y, z] = block;
-            /*
-            ToDo todo = new ToDo();
-            todo.x = x;
-            todo.y = y;
-            todo.z = z;
-            todo.block = block;
-            queue.Enqueue(todo);
-            //Debug.Log("enqueued block");
-            */
+
             if (changed)
             {
                 blocks[x, y, z].changed = changed;

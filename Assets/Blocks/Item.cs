@@ -5,6 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public bool isReady = false;
+    public int type;
 
     void Start()
     {
@@ -21,7 +22,12 @@ public class Item : MonoBehaviour
     {
         if (col.gameObject.tag == "Player" && isReady)
         {
-            col.gameObject.GetComponent<InventoryManager>().item1count++;
+            if(type == 1)
+                col.gameObject.GetComponent<InventoryManager>().item1count++;
+            else if (type == 2)
+                col.gameObject.GetComponent<InventoryManager>().item2count++;
+            else if (type == 3)
+                col.gameObject.GetComponent<InventoryManager>().item3count++;
             Destroy(gameObject);
         }
     }
