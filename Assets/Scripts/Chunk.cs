@@ -80,7 +80,7 @@ public class Chunk : MonoBehaviour {
             blocks[x, y, z] = block;
 
             // Drop item of block destroyed
-            Debug.Log(x + " " + y + " " + z);
+            //Debug.Log(x + " " + y + " " + z);
             //Instantiate(item_grass)
 
             if (changed)

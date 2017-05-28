@@ -56,8 +56,12 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            Mine();
+            //Mine();
             ChargeArrow();
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            Mine();
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -117,8 +121,14 @@ public class Modify : MonoBehaviour
         if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 5))
         {
             Vector3 pos = new Vector3(EditTerrain.GetBlockPos(hit).x, EditTerrain.GetBlockPos(hit).y, EditTerrain.GetBlockPos(hit).z);
-            EditTerrain.SetBlockItemDrop(hit, new BlockAir(), false, true);
-            Instantiate(item_grass, pos, Quaternion.identity);
+            Block block = EditTerrain.GetBlock(hit);
+            EditTerrain.SetBlock(hit, new BlockAir(), false, true);
+            if(block is BlockGrass)
+                Instantiate(item_grass, pos, Quaternion.identity);
+            else if (block is BlockSand)
+                Instantiate(item_sand, pos, Quaternion.identity);
+            else if (block is BlockWood)
+                Instantiate(item_wood, pos, Quaternion.identity);
         }
     }
 }
