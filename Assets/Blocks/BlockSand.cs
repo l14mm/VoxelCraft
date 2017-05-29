@@ -20,7 +20,7 @@ public class BlockSand : Block {
     }
     public void CheckBelow()
     {
-        RaycastHit hit;
+        //RaycastHit hit;
         //if(Physics.Raycast())
     }
 }

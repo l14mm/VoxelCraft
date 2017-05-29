@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Modify : MonoBehaviour
 {
-    public Camera camera;
+    public Camera myCam;
     public Animator anim;
     public GameObject item_grass;
     public GameObject item_sand;
@@ -72,7 +72,7 @@ public class Modify : MonoBehaviour
         {
             RaycastHit hit;
             //if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-            if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 5))
+            if (Physics.Raycast(myCam.transform.position, myCam.transform.forward, out hit, 5))
             {
                 //EditTerrain.SetBlock(hit, new BlockSand());
                 // Get block to the side which faces the player
@@ -118,7 +118,7 @@ public class Modify : MonoBehaviour
         // anim.Play("Mining");
         RaycastHit hit;
         //if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 5))
+        if (Physics.Raycast(myCam.transform.position, myCam.transform.forward, out hit, 5))
         {
             Vector3 pos = new Vector3(EditTerrain.GetBlockPos(hit).x, EditTerrain.GetBlockPos(hit).y, EditTerrain.GetBlockPos(hit).z);
             Block block = EditTerrain.GetBlock(hit);

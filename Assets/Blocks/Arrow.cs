@@ -13,6 +13,6 @@ public class Arrow : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        transform.LookAt(transform.position - GetComponent<Rigidbody>().velocity);
+        transform.LookAt(transform.position - rb.velocity);
     }
 }

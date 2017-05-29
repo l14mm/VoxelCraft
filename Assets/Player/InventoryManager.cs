@@ -32,6 +32,8 @@ public class InventoryManager : MonoBehaviour
         item3selector = GameObject.Find("Item3Selector").GetComponent<Image>();
         item3selector.enabled = false;
         SelectItem(1);
+
+        Serialization.Load(this);
     }
 
     public void SelectItem(int item)
@@ -52,5 +54,10 @@ public class InventoryManager : MonoBehaviour
         item1counttext.text = item1count.ToString();
         item2counttext.text = item2count.ToString();
         item3counttext.text = item3count.ToString();
+
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            Serialization.SavePlayer(this);
+        }
     }
 }

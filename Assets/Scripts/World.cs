@@ -42,7 +42,7 @@ public class World : MonoBehaviour {
     private IEnumerator LoadChunk(Chunk chunk)
     {
         yield return new WaitForSeconds(0.1f);
-        bool loaded = Serialization.Load(chunk);
+        //bool loaded = Serialization.Load(chunk);
     }
     /*
     void OnApplicationQuit()

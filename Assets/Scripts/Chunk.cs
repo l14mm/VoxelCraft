@@ -10,7 +10,7 @@ public class Chunk : MonoBehaviour {
     public Block[,,] blocks = new Block[chunkSize, chunkSize, chunkSize];
     public static int chunkSize = 16;
     public bool update = false;
-    private bool updating = false;
+    //private bool updating = false;
     public World world;
     public WorldPos pos;
     public bool rendered;
@@ -132,7 +132,7 @@ public class Chunk : MonoBehaviour {
     // Updates the chunk based on its contents
     void UpdateChunk()
     {
-        updating = true;
+        //updating = true;
         rendered = true;
         MeshData meshData = new MeshData();
         for (int x = 0; x < chunkSize; x++)
@@ -158,7 +158,7 @@ public class Chunk : MonoBehaviour {
             }
         }
         RenderMesh(meshData);
-        updating = false;
+        //updating = false;
     }
     // Sends the calculated mesh information
     // to the mesh and collision components

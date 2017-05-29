@@ -45,8 +45,28 @@ public static class Serialization
         formatter.Serialize(stream, save);
         stream.Close();
         //Debug.Log("saved chunk");
-
     }
+
+    public static void SavePlayer(InventoryManager player)
+    {
+        //chunk.SetBlocksUnmodified();
+        Save save = new Save(player);
+        if (save.inventory.Count == 0)
+        {
+            Debug.Log("no inventory");
+            return;
+        }
+
+        string saveFile = SaveLocation("player");
+        saveFile += player.name + ".bin";
+
+        IFormatter formatter = new BinaryFormatter();
+        Stream stream = new FileStream(saveFile, FileMode.Create, FileAccess.Write, FileShare.None);
+        formatter.Serialize(stream, save);
+        stream.Close();
+        //Debug.Log("saved chunk");
+    }
+
     public static bool Load(Chunk chunk)
     {
         string saveFile = SaveLocation(chunk.world.worldName);
@@ -67,6 +87,26 @@ public static class Serialization
 
         //Once set new loaded blocks, reload the chunk to display them
         chunk.update = true;
+
+        return true;
+    }
+
+    public static bool Load(InventoryManager player)
+    {
+        string saveFile = SaveLocation("player");
+        saveFile += player.name + ".bin";
+
+        if (!File.Exists(saveFile))
+            return false;
+
+        IFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(saveFile, FileMode.Open);
+
+        Save save = (Save)formatter.Deserialize(stream);
+        player.item1count = save.inventory[0];
+        player.item2count = save.inventory[1];
+        player.item3count = save.inventory[2];
+        stream.Close();
 
         return true;
     }
