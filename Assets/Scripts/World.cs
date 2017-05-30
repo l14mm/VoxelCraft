@@ -33,7 +33,7 @@ public class World : MonoBehaviour {
         newChunk = terrainGen.ChunkGen(newChunk);
         //newChunk.SetBlocksUnmodified();
         //bool loaded = Serialization.Load(newChunk);
-        StartCoroutine(LoadChunk(newChunk));
+        //StartCoroutine(LoadChunk(newChunk));
 
 
         //newChunk.SetBlocksUnmodified();

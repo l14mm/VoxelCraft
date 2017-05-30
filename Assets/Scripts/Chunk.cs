@@ -22,12 +22,8 @@ public class Chunk : MonoBehaviour {
     public GameObject item_sand;
     public GameObject item_wood;
 
-    private struct ToDo
-    {
-        public int x, y, z;
-        public Block block;
-    }
-    Queue<ToDo> queue = new Queue<ToDo>();
+    private float lastTimeUpdated = 0;
+    private float updateInterval = 0.5f;
 
     void OnApplicationQuit()
     {
@@ -44,6 +40,10 @@ public class Chunk : MonoBehaviour {
     }
     void Update()
     {
+        if (Time.time < lastTimeUpdated + updateInterval)
+            return;
+        if (Time.deltaTime < 0.035)
+            return;
         if (update)
         {
             update = false;
@@ -53,12 +53,7 @@ public class Chunk : MonoBehaviour {
         {
             //SaveChunk();
         }
-        if (queue.Count > 0)
-        {
-            //Debug.Log("changing block");
-            ToDo todo = queue.Dequeue();
-            blocks[todo.x, todo.y, todo.z] = todo.block;
-        }
+        lastTimeUpdated = Time.time; 
     }
     public Block GetBlock(int x, int y, int z)
     {

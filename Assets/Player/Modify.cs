@@ -106,7 +106,7 @@ public class Modify : MonoBehaviour
         // Rotate rotation to match forward of bow
         GameObject arrow = Instantiate(_arrow, arrowFirePosition.position, arrowFirePosition.rotation * Quaternion.Euler(0, 180, 0));
         
-        float force = 5 * arrowCharge;
+        float force = 10 * arrowCharge;
         arrowCharge = 0;
         arrow.GetComponent<Rigidbody>().AddForce(arrowFirePosition.forward * force, ForceMode.Impulse);
     }
