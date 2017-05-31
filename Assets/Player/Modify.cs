@@ -13,11 +13,33 @@ public class Modify : MonoBehaviour
     public Transform arrowFirePosition;
     private float arrowCharge = 0;
 
+    // Tools
+    public GameObject pick;
+    public GameObject bow;
+
     private Block currentBlock = new BlockGrass();
+
+    void Start()
+    {
+        bow.SetActive(false);
+    }
 
     void Update()
     {
-        if(Input.GetKeyDown("1"))
+        var d = Input.GetAxis("Mouse ScrollWheel");
+        if (d > 0f)
+        {
+            // scroll up
+            bow.SetActive(true);
+            pick.SetActive(false);
+        }
+        else if (d < 0f)
+        {
+            // scroll down
+            bow.SetActive(false);
+            pick.SetActive(true);
+        }
+        if (Input.GetKeyDown("1"))
         {
             currentBlock = new BlockGrass();
             GetComponent<InventoryManager>().SelectItem(1);
@@ -57,16 +79,19 @@ public class Modify : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             //Mine();
-            ChargeArrow();
+            if(bow.activeInHierarchy)
+                ChargeArrow();
         }
         if (Input.GetMouseButtonDown(0))
         {
-            Mine();
+            if(pick.activeInHierarchy)
+                Mine();
         }
         if (Input.GetMouseButtonUp(0))
         {
             //Mine();
-            FireArrow();
+            if (bow.activeInHierarchy)
+                FireArrow();
         }
         if (Input.GetMouseButtonDown(1))
         {
