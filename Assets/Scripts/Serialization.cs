@@ -103,9 +103,9 @@ public static class Serialization
         FileStream stream = new FileStream(saveFile, FileMode.Open);
 
         Save save = (Save)formatter.Deserialize(stream);
-        player.item1count = save.inventory[0];
-        player.item2count = save.inventory[1];
-        player.item3count = save.inventory[2];
+        //player.item1count = save.inventory[0];
+        //player.item2count = save.inventory[1];
+        //player.item3count = save.inventory[2];
         stream.Close();
 
         return true;

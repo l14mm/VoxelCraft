@@ -31,8 +31,8 @@ public class Save
 
     public Save(InventoryManager player)
     {
-        inventory.Add(player.item1count);
-        inventory.Add(player.item2count);
-        inventory.Add(player.item3count);
+        //inventory.Add(player.item1count);
+        //inventory.Add(player.item2count);
+        //inventory.Add(player.item3count);
     }
 }

@@ -26,19 +26,6 @@ public class Modify : MonoBehaviour
 
     void Update()
     {
-        var d = Input.GetAxis("Mouse ScrollWheel");
-        if (d > 0f)
-        {
-            // scroll up
-            bow.SetActive(true);
-            pick.SetActive(false);
-        }
-        else if (d < 0f)
-        {
-            // scroll down
-            bow.SetActive(false);
-            pick.SetActive(true);
-        }
         if (Input.GetKeyDown("1"))
         {
             currentBlock = new BlockGrass();
@@ -56,6 +43,7 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            /*
             GameObject temp;
             if (currentBlock is BlockGrass && GetComponent<InventoryManager>().item1count > 0)
             {
@@ -75,6 +63,7 @@ public class Modify : MonoBehaviour
                 temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
                 GetComponent<InventoryManager>().item3count--;
             }
+            */
         }
         if (Input.GetMouseButton(0))
         {
@@ -102,6 +91,7 @@ public class Modify : MonoBehaviour
                 //EditTerrain.SetBlock(hit, new BlockSand());
                 // Get block to the side which faces the player
                 //EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
+                /*
                 if (currentBlock is BlockGrass && GetComponent<InventoryManager>().item1count > 0)
                 {
                     EditTerrain.SetSideBlock(hit, currentBlock, false, true);
@@ -117,6 +107,7 @@ public class Modify : MonoBehaviour
                     EditTerrain.SetSideBlock(hit, currentBlock, false, true);
                     GetComponent<InventoryManager>().item3count--;
                 }
+                */
             }
         }
     }

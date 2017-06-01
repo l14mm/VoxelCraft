@@ -6,6 +6,7 @@ public class Item : MonoBehaviour
 {
     public bool isReady = false;
     public int type;
+    public Sprite sprite;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class Item : MonoBehaviour
     {
         if (col.gameObject.tag == "Player" && isReady)
         {
+            /*
             if(type == 1)
                 col.gameObject.GetComponent<InventoryManager>().item1count++;
             else if (type == 2)
@@ -29,6 +31,7 @@ public class Item : MonoBehaviour
             else if (type == 3)
                 col.gameObject.GetComponent<InventoryManager>().item3count++;
             Destroy(gameObject);
+            */
         }
     }
 }
