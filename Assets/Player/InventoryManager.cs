@@ -11,6 +11,10 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
+        for(int i = 0; i < 6; i++)
+        {
+            //inventory[i] = null;
+        }
         currentInventoryIndex = 0;
         SelectItem(currentInventoryIndex);
 
@@ -26,14 +30,21 @@ public class InventoryManager : MonoBehaviour
         }
         // Select one
         slots[index].selector.enabled = true;
+
+        if(inventory[index] && inventory[index].isTool)
+        {
+            Debug.Log("instantiated: " + inventory[index].name);
+            Instantiate(inventory[index]);
+        }
     }
 
     void Update()
     {
         //item1counttext.text = item1count.ToString();
-        for(int i = 0; i < 6; i++)
+        for(int i = 0; i < inventory.Length; i++)
         {
-            slots[i].icon.sprite = inventory[i].sprite;
+            if(inventory[i] != null)
+                slots[i].icon.sprite = inventory[i].sprite;
         }
 
         if(Input.GetKeyDown(KeyCode.S))

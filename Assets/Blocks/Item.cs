@@ -5,6 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public bool isReady = false;
+    public bool isTool = false;
     public int type;
     public Sprite sprite;
 
