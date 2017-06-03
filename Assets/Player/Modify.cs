@@ -13,15 +13,10 @@ public class Modify : MonoBehaviour
     public Transform arrowFirePosition;
     private float arrowCharge = 0;
 
-    // Tools
-    public GameObject pick;
-    public GameObject bow;
-
     private Block currentBlock = new BlockGrass();
 
     void Start()
     {
-        bow.SetActive(false);
     }
 
     void Update()
@@ -67,19 +62,17 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            //Mine();
-            if(bow.activeInHierarchy)
+            if(GetComponent<InventoryManager>().currentTool.GetComponent<Item>().name == "bow")
                 ChargeArrow();
         }
         if (Input.GetMouseButtonDown(0))
         {
-            if(pick.activeInHierarchy)
+            if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().name == "pick")
                 Mine();
         }
         if (Input.GetMouseButtonUp(0))
         {
-            //Mine();
-            if (bow.activeInHierarchy)
+            if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().name == "bow")
                 FireArrow();
         }
         if (Input.GetMouseButtonDown(1))
@@ -120,6 +113,7 @@ public class Modify : MonoBehaviour
     void FireArrow()
     {
         // Rotate rotation to match forward of bow
+        arrowFirePosition = GetComponent<InventoryManager>().currentTool.transform.FindChild("ArrowFirePosition");
         GameObject arrow = Instantiate(_arrow, arrowFirePosition.position, arrowFirePosition.rotation * Quaternion.Euler(0, 180, 0));
         
         float force = 10 * arrowCharge;

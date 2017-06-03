@@ -8,6 +8,7 @@ public class InventoryManager : MonoBehaviour
     public Item[] inventory = new Item[6];
     public HUDInventorySlot[] slots = new HUDInventorySlot[6];
     private int currentInventoryIndex;
+    public GameObject currentTool = null;
 
     void Start()
     {
@@ -33,8 +34,10 @@ public class InventoryManager : MonoBehaviour
 
         if(inventory[index] && inventory[index].isTool)
         {
+            if (currentTool != null)
+                Destroy(currentTool);
             Debug.Log("instantiated: " + inventory[index].name);
-            Instantiate(inventory[index]);
+            currentTool = Instantiate(inventory[index].gameObject, Camera.main.transform);
         }
     }
 
