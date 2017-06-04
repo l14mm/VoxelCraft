@@ -8,4 +8,8 @@ public class HUDInventorySlot : MonoBehaviour
     public Image selector;
     public Image icon;
     public Text count;
+
+    void Start()
+    {
+    }
 }

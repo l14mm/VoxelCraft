@@ -9,6 +9,8 @@ public class InventoryManager : MonoBehaviour
     public HUDInventorySlot[] slots = new HUDInventorySlot[6];
     private int currentInventoryIndex;
     public GameObject currentTool = null;
+    public bool isStorageEnabled;
+    public GameObject inventoryStorage;
 
     void Start()
     {
@@ -18,6 +20,9 @@ public class InventoryManager : MonoBehaviour
         }
         currentInventoryIndex = 0;
         SelectItem(currentInventoryIndex);
+
+        inventoryStorage.SetActive(false);
+        isStorageEnabled = false;
 
         //Serialization.Load(this);
     }
@@ -43,14 +48,36 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         //item1counttext.text = item1count.ToString();
-        for(int i = 0; i < inventory.Length; i++)
+        for (int i = 0; i < inventory.Length; i++)
         {
             if(inventory[i] != null)
+            {
                 slots[i].icon.sprite = inventory[i].sprite;
+                slots[i].icon.enabled = true;
+            }
+            else
+                slots[i].icon.enabled = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if(!isStorageEnabled)
+            {
+                inventoryStorage.SetActive(true);
+                isStorageEnabled = true;
+                //Cursor.visible = true;
+                //Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                inventoryStorage.SetActive(false);
+                isStorageEnabled = false;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.S))
         {
             //Serialization.SavePlayer(this);
         }
