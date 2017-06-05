@@ -12,6 +12,8 @@ public class InventoryManager : MonoBehaviour
     public bool isStorageEnabled;
     public GameObject inventoryStorage;
 
+    private Image dragImage = null;
+
     void Start()
     {
         for(int i = 0; i < 6; i++)
@@ -25,6 +27,9 @@ public class InventoryManager : MonoBehaviour
         isStorageEnabled = false;
 
         //Serialization.Load(this);
+        //Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.visible = true;
+        //Cursor.SetCursor(cursorTex, new Vector2(Screen.width / 2, Screen.height / 2), CursorMode.Auto);
     }
 
     public void SelectItem(int index)
@@ -48,8 +53,6 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         //item1counttext.text = item1count.ToString();
         for (int i = 0; i < inventory.Length; i++)
         {
@@ -61,20 +64,52 @@ public class InventoryManager : MonoBehaviour
             else
                 slots[i].icon.enabled = false;
         }
-
+        if(Input.GetMouseButtonDown(0) && isStorageEnabled)
+        {
+            Debug.Log(Input.mousePosition);
+            // Get array of icon images and find the closest one to the mouse click
+            GameObject[] images = GameObject.FindGameObjectsWithTag("InventorySlot");
+            List<Image> icons = new List<Image>();
+            foreach(GameObject image in images)
+            {
+                icons.Add(image.GetComponent<HUDInventorySlot>().icon);
+            }
+            float closestDistance = Mathf.Infinity;
+            Image closestIcon = null;
+            foreach(Image icon in icons)
+            {
+                float distance = Vector2.Distance(Input.mousePosition, icon.GetComponent<RectTransform>().position);
+                if(distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestIcon = icon;
+                }
+            }
+            dragImage = closestIcon;
+            //closestIcon.GetComponent<RectTransform>().Translate(new Vector3(10, 0, 0));
+        }
+        if (dragImage &&  Input.GetMouseButton(0) && isStorageEnabled)
+        {
+            //Debug.Log("image: " + dragImage.GetComponent<RectTransform>().position);
+            //Debug.Log("mouse: " + Input.mousePosition);
+            //dragImage.GetComponent<RectTransform>().Translate(new Vector3(10, 0, 0));
+            dragImage.GetComponent<RectTransform>().Translate(Input.mousePosition - dragImage.GetComponent<RectTransform>().position);
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             if(!isStorageEnabled)
             {
                 inventoryStorage.SetActive(true);
                 isStorageEnabled = true;
-                //Cursor.visible = true;
-                //Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
             }
             else
             {
                 inventoryStorage.SetActive(false);
                 isStorageEnabled = false;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
         if (Input.GetKeyDown(KeyCode.S))
