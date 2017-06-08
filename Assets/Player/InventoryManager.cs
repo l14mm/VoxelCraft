@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public Item[] inventory = new Item[6];
-    public HUDInventorySlot[] slots = new HUDInventorySlot[6];
+    public Item[] inventory = new Item[12];
+    public HUDInventorySlot[] slots = new HUDInventorySlot[12];
     private int currentInventoryIndex;
     public GameObject currentTool = null;
     public bool isStorageEnabled;
     public GameObject inventoryStorage;
 
     private Image dragImage = null;
+    private HUDInventorySlot sourceSlot = null;
 
     void Start()
     {
@@ -85,6 +86,7 @@ public class InventoryManager : MonoBehaviour
                 }
             }
             dragImage = closestIcon;
+            sourceSlot = closestIcon.GetComponentInParent<HUDInventorySlot>();
             //closestIcon.GetComponent<RectTransform>().Translate(new Vector3(10, 0, 0));
         }
         if (dragImage && Input.GetMouseButton(0) && isStorageEnabled)
@@ -114,7 +116,8 @@ public class InventoryManager : MonoBehaviour
                     closestIcon = icon;
                 }
             }
-            dragImage.GetComponent<RectTransform>().position = closestIcon.GetComponent<RectTransform>().position;
+            //dragImage.GetComponent<RectTransform>().position = closestIcon.GetComponent<RectTransform>().position;
+            dragImage.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
