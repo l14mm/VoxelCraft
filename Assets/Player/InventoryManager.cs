@@ -116,8 +116,20 @@ public class InventoryManager : MonoBehaviour
                     closestIcon = icon;
                 }
             }
-            //dragImage.GetComponent<RectTransform>().position = closestIcon.GetComponent<RectTransform>().position;
-            dragImage.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
+            // Check if icon has been dragged inside the closest icon
+            if((dragImage.GetComponent<RectTransform>().position.x < closestIcon.GetComponent<RectTransform>().position.x + closestIcon.GetComponent<RectTransform>().sizeDelta.x)
+                && (dragImage.GetComponent<RectTransform>().position.x > closestIcon.GetComponent<RectTransform>().position.x - closestIcon.GetComponent<RectTransform>().sizeDelta.x)
+                && (dragImage.GetComponent<RectTransform>().position.y < closestIcon.GetComponent<RectTransform>().position.y + closestIcon.GetComponent<RectTransform>().sizeDelta.y)
+                && (dragImage.GetComponent<RectTransform>().position.y > closestIcon.GetComponent<RectTransform>().position.y - closestIcon.GetComponent<RectTransform>().sizeDelta.y)
+                )
+            {
+                dragImage.GetComponent<RectTransform>().position = closestIcon.GetComponent<RectTransform>().position;
+            }
+            else
+            {
+                // Else return to original position
+                dragImage.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
+            }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
