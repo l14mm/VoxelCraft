@@ -123,7 +123,13 @@ public class InventoryManager : MonoBehaviour
                 && (dragImage.GetComponent<RectTransform>().position.y > closestIcon.GetComponent<RectTransform>().position.y - closestIcon.GetComponent<RectTransform>().sizeDelta.y)
                 )
             {
+                // Put drag icon in new slot
                 dragImage.GetComponent<RectTransform>().position = closestIcon.GetComponent<RectTransform>().position;
+                dragImage.transform.parent = closestIcon.transform.parent;
+                // Put new icon in old slot (swap)
+                closestIcon.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
+                closestIcon.transform.parent.GetComponent<HUDInventorySlot>().icon.transform.parent = sourceSlot.transform;
+
             }
             else
             {
