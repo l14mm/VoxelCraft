@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour
 {
     public Item[] inventory = new Item[12];
-    public HUDInventorySlot[] slots = new HUDInventorySlot[12];
+    //public HUDInventorySlot[] slots = new HUDInventorySlot[12];
+    public List<HUDInventorySlot> slots = new List<HUDInventorySlot>();
     private int currentInventoryIndex;
     public GameObject currentTool = null;
     public bool isStorageEnabled;
@@ -123,13 +124,21 @@ public class InventoryManager : MonoBehaviour
                 && (dragImage.GetComponent<RectTransform>().position.y > closestIcon.GetComponent<RectTransform>().position.y - closestIcon.GetComponent<RectTransform>().sizeDelta.y)
                 )
             {
+                /*
                 // Put drag icon in new slot
                 dragImage.GetComponent<RectTransform>().position = closestIcon.GetComponent<RectTransform>().position;
                 dragImage.transform.parent = closestIcon.transform.parent;
                 // Put new icon in old slot (swap)
                 closestIcon.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
                 closestIcon.transform.parent.GetComponent<HUDInventorySlot>().icon.transform.parent = sourceSlot.transform;
-
+                */
+                int i = slots.IndexOf(dragImage.transform.parent.GetComponent<HUDInventorySlot>());
+                int j = slots.IndexOf(closestIcon.transform.parent.GetComponent<HUDInventorySlot>());
+                // Swap i and j
+                // watch for nulls
+                Item temp = inventory[i];
+                inventory[i] = inventory[j];
+                inventory[j] = temp;
             }
             else
             {
