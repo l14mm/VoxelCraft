@@ -136,8 +136,12 @@ public class InventoryManager : MonoBehaviour
                 int j = slots.IndexOf(closestIcon.transform.parent.GetComponent<HUDInventorySlot>());
                 // Swap i and j
                 // watch for nulls
-                Item temp = inventory[i];
-                inventory[i] = inventory[j];
+                Item temp = null;
+                if (inventory[i] != null)
+                    temp = inventory[i];
+                inventory[i] = null;
+                if (inventory[j] != null)
+                    inventory[i] = inventory[j];
                 inventory[j] = temp;
             }
             else
