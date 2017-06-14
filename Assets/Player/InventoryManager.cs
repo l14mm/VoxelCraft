@@ -18,7 +18,7 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
-        for(int i = 0; i < 6; i++)
+        for(int i = 0; i < 12; i++)
         {
             //inventory[i] = null;
         }
@@ -132,6 +132,7 @@ public class InventoryManager : MonoBehaviour
                 closestIcon.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
                 closestIcon.transform.parent.GetComponent<HUDInventorySlot>().icon.transform.parent = sourceSlot.transform;
                 */
+                dragImage.GetComponent<RectTransform>().Translate(Input.mousePosition - dragImage.GetComponent<RectTransform>().position);
                 int i = slots.IndexOf(dragImage.transform.parent.GetComponent<HUDInventorySlot>());
                 int j = slots.IndexOf(closestIcon.transform.parent.GetComponent<HUDInventorySlot>());
                 // Swap i and j
@@ -143,6 +144,8 @@ public class InventoryManager : MonoBehaviour
                 if (inventory[j] != null)
                     inventory[i] = inventory[j];
                 inventory[j] = temp;
+                Debug.Log(i + " switching with " + j);
+                closestIcon.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
             }
             else
             {
