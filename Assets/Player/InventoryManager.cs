@@ -88,13 +88,9 @@ public class InventoryManager : MonoBehaviour
             }
             dragImage = closestIcon;
             sourceSlot = closestIcon.GetComponentInParent<HUDInventorySlot>();
-            //closestIcon.GetComponent<RectTransform>().Translate(new Vector3(10, 0, 0));
         }
         if (dragImage && Input.GetMouseButton(0) && isStorageEnabled)
         {
-            //Debug.Log("image: " + dragImage.GetComponent<RectTransform>().position);
-            //Debug.Log("mouse: " + Input.mousePosition);
-            //dragImage.GetComponent<RectTransform>().Translate(new Vector3(10, 0, 0));
             dragImage.GetComponent<RectTransform>().Translate(Input.mousePosition - dragImage.GetComponent<RectTransform>().position);
         }
         if (dragImage && Input.GetMouseButtonUp(0) && isStorageEnabled)
@@ -132,7 +128,8 @@ public class InventoryManager : MonoBehaviour
                 closestIcon.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
                 closestIcon.transform.parent.GetComponent<HUDInventorySlot>().icon.transform.parent = sourceSlot.transform;
                 */
-                dragImage.GetComponent<RectTransform>().Translate(Input.mousePosition - dragImage.GetComponent<RectTransform>().position);
+                //dragImage.GetComponent<RectTransform>().Translate(Input.mousePosition - dragImage.GetComponent<RectTransform>().position);
+                dragImage.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
                 int i = slots.IndexOf(dragImage.transform.parent.GetComponent<HUDInventorySlot>());
                 int j = slots.IndexOf(closestIcon.transform.parent.GetComponent<HUDInventorySlot>());
                 // Swap i and j
@@ -145,7 +142,7 @@ public class InventoryManager : MonoBehaviour
                     inventory[i] = inventory[j];
                 inventory[j] = temp;
                 Debug.Log(i + " switching with " + j);
-                closestIcon.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
+                //closestIcon.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
             }
             else
             {
