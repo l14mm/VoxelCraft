@@ -6,9 +6,14 @@ public class Item : MonoBehaviour
 {
     public bool isReady = false;
     public bool isTool = false;
-    public int type;
+    public Items type;
     public Sprite sprite;
     public string name;
+
+    public enum Items
+    {
+        grass, sand, wood, pick, bow
+    }
 
     void Start()
     {
@@ -25,15 +30,8 @@ public class Item : MonoBehaviour
     {
         if (col.gameObject.tag == "Player" && isReady)
         {
-            /*
-            if(type == 1)
-                col.gameObject.GetComponent<InventoryManager>().item1count++;
-            else if (type == 2)
-                col.gameObject.GetComponent<InventoryManager>().item2count++;
-            else if (type == 3)
-                col.gameObject.GetComponent<InventoryManager>().item3count++;
+            col.gameObject.GetComponent<InventoryManager>().PickupItem(type);
             Destroy(gameObject);
-            */
         }
     }
 }

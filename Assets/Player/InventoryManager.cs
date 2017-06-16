@@ -36,8 +36,10 @@ public class InventoryManager : MonoBehaviour
 
     public void SelectItem(int index)
     {
+        if (currentTool != null)
+            Destroy(currentTool);
         // Deselect all other slots
-        foreach(HUDInventorySlot slot in slots)
+        foreach (HUDInventorySlot slot in slots)
         {
             slot.selector.enabled = false;
         }
@@ -46,11 +48,24 @@ public class InventoryManager : MonoBehaviour
 
         if(inventory[index] && inventory[index].isTool)
         {
-            if (currentTool != null)
-                Destroy(currentTool);
             Debug.Log("instantiated: " + inventory[index].name);
             currentTool = Instantiate(inventory[index].gameObject, Camera.main.transform);
         }
+    }
+
+    public void PickupItem(Item.Items type)
+    {
+        // Find first item of same type in inventory
+        int index = -1;
+        for(int i = 0; i < inventory.Length; i++)
+        {
+            if(inventory[i] != null && inventory[i].type == type)
+            {
+                index = i;
+                break;
+            }
+        }
+        slots[index].count.text = (int.Parse(slots[index].count.text) + 1).ToString();
     }
 
     void Update()
