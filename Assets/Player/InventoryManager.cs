@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour
 {
     public Item[] inventory = new Item[12];
-    //public HUDInventorySlot[] slots = new HUDInventorySlot[12];
+    //public HUDInventorySlot[] HUDSlots = new HUDInventorySlot[12];
     public List<HUDInventorySlot> slots = new List<HUDInventorySlot>();
     private int currentInventoryIndex;
     public GameObject currentTool = null;
     public bool isStorageEnabled;
     public GameObject inventoryStorage;
+    public List<InventorySlot> inv = new List<InventorySlot>();
 
     private Image dragImage = null;
     private HUDInventorySlot sourceSlot = null;
@@ -20,7 +21,7 @@ public class InventoryManager : MonoBehaviour
     {
         for(int i = 0; i < 12; i++)
         {
-            //inventory[i] = null;
+
         }
         currentInventoryIndex = 0;
         SelectItem(currentInventoryIndex);
