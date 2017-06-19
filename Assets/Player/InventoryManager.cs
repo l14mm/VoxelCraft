@@ -47,9 +47,13 @@ public class InventoryManager : MonoBehaviour
         // Select one
         slots[index].selector.enabled = true;
 
-        if(inventory[index] && inventory[index].isTool)
+        if (inventory[index] && inventory[index].isTool)
         {
             Debug.Log("instantiated: " + inventory[index].name);
+            currentTool = Instantiate(inventory[index].gameObject, Camera.main.transform);
+        }
+        else if (inventory[index])
+        {
             currentTool = Instantiate(inventory[index].gameObject, Camera.main.transform);
         }
     }
