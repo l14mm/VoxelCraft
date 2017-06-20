@@ -55,6 +55,8 @@ public class InventoryManager : MonoBehaviour
         else if (inventory[index])
         {
             currentTool = Instantiate(inventory[index].gameObject, Camera.main.transform);
+            currentTool.GetComponent<Rigidbody>().isKinematic = true;
+            currentTool.GetComponent<BoxCollider>().enabled = false;
         }
     }
 
