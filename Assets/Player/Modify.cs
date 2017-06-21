@@ -38,27 +38,23 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            /*
             GameObject temp;
-            if (currentBlock is BlockGrass && GetComponent<InventoryManager>().item1count > 0)
+            if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.grass)
             {
                 temp = Instantiate(item_grass, transform.position + transform.forward, transform.rotation);
                 temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
-                GetComponent<InventoryManager>().item1count--;
+                //GetComponent<InventoryManager>().
             }
-            else if (currentBlock is BlockSand && GetComponent<InventoryManager>().item2count > 0)
+            else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.sand)
             {
                 temp = Instantiate(item_sand, transform.position + transform.forward, transform.rotation);
                 temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
-                GetComponent<InventoryManager>().item2count--;
             }
-            else if (currentBlock is BlockWood && GetComponent<InventoryManager>().item3count > 0)
+            else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.wood)
             {
                 temp = Instantiate(item_wood, transform.position + transform.forward, transform.rotation);
                 temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
-                GetComponent<InventoryManager>().item3count--;
             }
-            */
         }
         if (Input.GetMouseButton(0))
         {
@@ -89,7 +85,14 @@ public class Modify : MonoBehaviour
                 {
                     EditTerrain.SetSideBlock(hit, new BlockGrass(), false, true);
                 }
-                
+                else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.sand)
+                {
+                    EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
+                }
+                else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.wood)
+                {
+                    EditTerrain.SetSideBlock(hit, new BlockWood(), false, true);
+                }
             }
         }
     }

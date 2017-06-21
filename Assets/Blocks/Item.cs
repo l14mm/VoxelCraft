@@ -8,7 +8,6 @@ public class Item : MonoBehaviour
     public bool isTool = false;
     public Items type;
     public Sprite sprite;
-    public string name;
 
     public enum Items
     {
