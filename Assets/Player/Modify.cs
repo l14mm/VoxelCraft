@@ -58,7 +58,7 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            if(GetComponent<InventoryManager>().currentTool.GetComponent<Item>().name == "bow")
+            if(GetComponent<InventoryManager>().currentTool && GetComponent<InventoryManager>().currentTool.GetComponent<Item>().name == "bow")
                 ChargeArrow();
         }
         if (Input.GetMouseButtonDown(0))

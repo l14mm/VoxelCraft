@@ -21,7 +21,11 @@ public class InventoryManager : MonoBehaviour
     {
         for(int i = 0; i < 12; i++)
         {
-
+            InventorySlot temp = new InventorySlot();
+            temp.itemType = inventory[i];
+            temp.count = 1;
+            temp.HUDSlot = slots[i];
+            inv.Add(temp);
         }
         currentInventoryIndex = 0;
         SelectItem(currentInventoryIndex);
@@ -49,7 +53,7 @@ public class InventoryManager : MonoBehaviour
 
         if (inventory[index] && inventory[index].isTool)
         {
-            Debug.Log("instantiated: " + inventory[index].name);
+            //Debug.Log("instantiated: " + inventory[index].name);
             currentTool = Instantiate(inventory[index].gameObject, Camera.main.transform);
         }
         else if (inventory[index])
@@ -82,11 +86,13 @@ public class InventoryManager : MonoBehaviour
         {
             if(inventory[i] != null)
             {
-                slots[i].icon.sprite = inventory[i].sprite;
-                slots[i].icon.enabled = true;
+                //slots[i].icon.sprite = inventory[i].sprite;
+                inv[i].HUDSlot.icon.sprite = inv[i].itemType.sprite;
+                inv[i].HUDSlot.count.text = inv[i].count.ToString();
+                inv[i].HUDSlot.icon.enabled = true;
             }
             else
-                slots[i].icon.enabled = false;
+                inv[i].HUDSlot.icon.enabled = false;
         }
         if(Input.GetMouseButtonDown(0) && isStorageEnabled)
         {
