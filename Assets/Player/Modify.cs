@@ -43,17 +43,19 @@ public class Modify : MonoBehaviour
             {
                 temp = Instantiate(item_grass, transform.position + transform.forward, transform.rotation);
                 temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
-                //GetComponent<InventoryManager>().
+                GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
             }
             else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.sand)
             {
                 temp = Instantiate(item_sand, transform.position + transform.forward, transform.rotation);
                 temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
+                GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
             }
             else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.wood)
             {
                 temp = Instantiate(item_wood, transform.position + transform.forward, transform.rotation);
                 temp.GetComponent<Rigidbody>().AddForce(transform.forward * 3 + new Vector3(0, 1, 0), ForceMode.Impulse);
+                GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
             }
         }
         if (Input.GetMouseButton(0))

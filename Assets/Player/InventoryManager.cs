@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
     public List<HUDInventorySlot> slots = new List<HUDInventorySlot>();
     private int currentInventoryIndex;
     public GameObject currentTool = null;
+    public int selectedIndex = 0;
     public bool isStorageEnabled;
     public GameObject inventoryStorage;
     public List<InventorySlot> inv = new List<InventorySlot>();
@@ -61,6 +62,7 @@ public class InventoryManager : MonoBehaviour
             currentTool = Instantiate(inventory[index].gameObject, Camera.main.transform);
             currentTool.GetComponent<Rigidbody>().isKinematic = true;
             currentTool.GetComponent<BoxCollider>().enabled = false;
+            selectedIndex = index;
         }
     }
 
@@ -90,6 +92,13 @@ public class InventoryManager : MonoBehaviour
                 inv[i].HUDSlot.icon.sprite = inv[i].itemType.sprite;
                 inv[i].HUDSlot.count.text = inv[i].count.ToString();
                 inv[i].HUDSlot.icon.enabled = true;
+                // If item count is less then 1, remove item.
+                if (inv[i].count < 1)
+                {
+                    inv[i].HUDSlot.icon.sprite = null;
+                    inv[i].HUDSlot.count.text = null;
+                    inv[i].HUDSlot.icon.enabled = false;
+                }
             }
             else
                 inv[i].HUDSlot.icon.enabled = false;
