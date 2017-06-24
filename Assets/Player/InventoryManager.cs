@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour
 {
     public Item[] inventory = new Item[12];
-    //public HUDInventorySlot[] HUDSlots = new HUDInventorySlot[12];
     public List<HUDInventorySlot> slots = new List<HUDInventorySlot>();
     private int currentInventoryIndex;
     public GameObject currentTool = null;
@@ -52,14 +51,14 @@ public class InventoryManager : MonoBehaviour
         // Select one
         slots[index].selector.enabled = true;
 
-        if (inventory[index] && inventory[index].isTool)
+        if (inv[index].itemType && inv[index].itemType.isTool)
         {
             //Debug.Log("instantiated: " + inventory[index].name);
-            currentTool = Instantiate(inventory[index].gameObject, Camera.main.transform);
+            currentTool = Instantiate(inv[index].itemType.gameObject, Camera.main.transform);
         }
-        else if (inventory[index])
+        else if (inv[index].itemType)
         {
-            currentTool = Instantiate(inventory[index].gameObject, Camera.main.transform);
+            currentTool = Instantiate(inv[index].itemType.gameObject, Camera.main.transform);
             currentTool.GetComponent<Rigidbody>().isKinematic = true;
             currentTool.GetComponent<BoxCollider>().enabled = false;
             selectedIndex = index;
@@ -70,9 +69,9 @@ public class InventoryManager : MonoBehaviour
     {
         // Find first item of same type in inventory
         int index = -1;
-        for(int i = 0; i < inventory.Length; i++)
+        for(int i = 0; i < inv.Count; i++)
         {
-            if(inventory[i] != null && inventory[i].type == type)
+            if(inv[i].itemType != null && inv[i].itemType.type == type)
             {
                 index = i;
                 break;
@@ -84,10 +83,11 @@ public class InventoryManager : MonoBehaviour
     void Update()
     {
         //item1counttext.text = item1count.ToString();
-        for (int i = 0; i < inventory.Length; i++)
+        for (int i = 0; i < inv.Count; i++)
         {
-            if(inventory[i] != null)
+            if(inv[i].itemType)
             {
+                inv[i].HUDSlot.icon.enabled = true;
                 //slots[i].icon.sprite = inventory[i].sprite;
                 inv[i].HUDSlot.icon.sprite = inv[i].itemType.sprite;
                 inv[i].HUDSlot.count.text = inv[i].count.ToString();
@@ -95,9 +95,9 @@ public class InventoryManager : MonoBehaviour
                 // If item count is less then 1, remove item.
                 if (inv[i].count < 1)
                 {
-                    inv[i].HUDSlot.icon.sprite = null;
-                    inv[i].HUDSlot.count.text = null;
-                    inv[i].HUDSlot.icon.enabled = false;
+                    //inv[i].HUDSlot.icon.sprite = null;
+                    //inv[i].HUDSlot.count.text = null;
+                    //inv[i].HUDSlot.icon.enabled = false;
                 }
             }
             else
@@ -171,13 +171,30 @@ public class InventoryManager : MonoBehaviour
                 int j = slots.IndexOf(closestIcon.transform.parent.GetComponent<HUDInventorySlot>());
                 // Swap i and j
                 // watch for nulls
-                Item temp = null;
-                if (inventory[i] != null)
-                    temp = inventory[i];
-                inventory[i] = null;
-                if (inventory[j] != null)
-                    inventory[i] = inventory[j];
-                inventory[j] = temp;
+                InventorySlot temp = new InventorySlot();
+                if (inv[i].itemType)
+                {
+                    //temp = inv[i];
+                    temp.itemType = inv[i].itemType;
+                    temp.count = inv[i].count;
+                }
+                else
+                {
+                    temp.itemType = null;
+                }
+                if (inv[j].itemType)
+                {
+                    //inv[i] = inv[j];
+                    inv[i].itemType = inv[j].itemType;
+                    inv[i].count = inv[j].count;
+                }
+                else
+                {
+                    inv[i].itemType = null;
+                    inv[i].count = 0;
+                }
+                inv[j].itemType = temp.itemType;
+                inv[j].count = temp.count;
                 Debug.Log(i + " switching with " + j);
                 //closestIcon.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
             }
