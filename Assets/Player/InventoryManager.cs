@@ -85,13 +85,14 @@ public class InventoryManager : MonoBehaviour
         //item1counttext.text = item1count.ToString();
         for (int i = 0; i < inv.Count; i++)
         {
-            if(inv[i].itemType)
+            if (inv[i].itemType)
             {
                 inv[i].HUDSlot.icon.enabled = true;
                 //slots[i].icon.sprite = inventory[i].sprite;
                 inv[i].HUDSlot.icon.sprite = inv[i].itemType.sprite;
                 inv[i].HUDSlot.count.text = inv[i].count.ToString();
                 inv[i].HUDSlot.icon.enabled = true;
+                inv[i].HUDSlot.count.enabled = true;
                 // If item count is less then 1, remove item.
                 if (inv[i].count < 1)
                 {
@@ -101,7 +102,10 @@ public class InventoryManager : MonoBehaviour
                 }
             }
             else
+            {
                 inv[i].HUDSlot.icon.enabled = false;
+                inv[i].HUDSlot.count.enabled = false;
+            }
         }
         if(Input.GetMouseButtonDown(0) && isStorageEnabled)
         {
@@ -169,34 +173,41 @@ public class InventoryManager : MonoBehaviour
                 dragImage.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
                 int i = slots.IndexOf(dragImage.transform.parent.GetComponent<HUDInventorySlot>());
                 int j = slots.IndexOf(closestIcon.transform.parent.GetComponent<HUDInventorySlot>());
+
                 // Swap i and j
-                // watch for nulls
                 InventorySlot temp = new InventorySlot();
-                if (inv[i].itemType)
+                if (inv[i].itemType == inv[j].itemType)
                 {
-                    //temp = inv[i];
-                    temp.itemType = inv[i].itemType;
-                    temp.count = inv[i].count;
-                }
-                else
-                {
-                    temp.itemType = null;
-                }
-                if (inv[j].itemType)
-                {
-                    //inv[i] = inv[j];
-                    inv[i].itemType = inv[j].itemType;
-                    inv[i].count = inv[j].count;
-                }
-                else
-                {
+                    // If both slots are the same item type, combine the items and the counts
+                    inv[j].count += inv[i].count;
                     inv[i].itemType = null;
                     inv[i].count = 0;
                 }
-                inv[j].itemType = temp.itemType;
-                inv[j].count = temp.count;
-                Debug.Log(i + " switching with " + j);
-                //closestIcon.GetComponent<RectTransform>().position = sourceSlot.selector.GetComponent<RectTransform>().position;
+                else
+                {
+                    if (inv[i].itemType)
+                    {
+                        temp.itemType = inv[i].itemType;
+                        temp.count = inv[i].count;
+                    }
+                    else
+                    {
+                        temp.itemType = null;
+                        temp.count = 0;
+                    }
+                    if (inv[j].itemType)
+                    {
+                        inv[i].itemType = inv[j].itemType;
+                        inv[i].count = inv[j].count;
+                    }
+                    else
+                    {
+                        inv[i].itemType = null;
+                        inv[i].count = 0;
+                    }
+                    inv[j].itemType = temp.itemType;
+                    inv[j].count = temp.count;
+                }
             }
             else
             {
