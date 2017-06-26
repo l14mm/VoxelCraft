@@ -60,17 +60,17 @@ public class Modify : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            if(GetComponent<InventoryManager>().currentTool && GetComponent<InventoryManager>().currentTool.GetComponent<Item>().name == "bow")
+            if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.bow)
                 ChargeArrow();
         }
         if (Input.GetMouseButtonDown(0))
         {
-            if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().name == "pick")
+            if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.pick)
                 Mine();
         }
         if (Input.GetMouseButtonUp(0))
         {
-            if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().name == "bow")
+            if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.bow)
                 FireArrow();
         }
         if (Input.GetMouseButtonDown(1))

@@ -33,6 +33,13 @@ public class InventoryManager : MonoBehaviour
         inventoryStorage.SetActive(false);
         isStorageEnabled = false;
 
+
+        inventoryStorage.SetActive(false);
+        isStorageEnabled = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        GetComponent<UnityStandardAssets.Characters.FirstPerson.Player>().enabled = true;
+
         //Serialization.Load(this);
         //Cursor.lockState = CursorLockMode.Confined;
         //Cursor.visible = true;
@@ -77,7 +84,27 @@ public class InventoryManager : MonoBehaviour
                 break;
             }
         }
-        slots[index].count.text = (int.Parse(slots[index].count.text) + 1).ToString();
+        index = -1;
+        if(index > -1)
+            inv[index].count++;
+        else
+        {
+            // Else find first empty slot and add new item
+            for (int i = 0; i < inv.Count; i++)
+            {
+                if (inv[i].itemType == null)
+                {
+                    index = i;
+                    break;
+                }
+                if(index > -1)
+                {
+                    inv[index].itemType = new Item();
+                    inv[index].itemType.type = type;
+                    inv[index].count = 1;
+                }
+            }
+        }
     }
 
     void Update()
@@ -230,7 +257,7 @@ public class InventoryManager : MonoBehaviour
                 inventoryStorage.SetActive(false);
                 isStorageEnabled = false;
                 Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.lockState = CursorLockMode.None;
                 GetComponent<UnityStandardAssets.Characters.FirstPerson.Player>().enabled = true;
             }
         }
