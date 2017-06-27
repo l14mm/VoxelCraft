@@ -86,14 +86,17 @@ public class Modify : MonoBehaviour
                 if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.grass)
                 {
                     EditTerrain.SetSideBlock(hit, new BlockGrass(), false, true);
+                    GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
                 }
                 else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.sand)
                 {
                     EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
+                    GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
                 }
                 else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.wood)
                 {
                     EditTerrain.SetSideBlock(hit, new BlockWood(), false, true);
+                    GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
                 }
             }
         }

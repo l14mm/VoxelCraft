@@ -123,9 +123,15 @@ public class InventoryManager : MonoBehaviour
                 // If item count is less then 1, remove item.
                 if (inv[i].count < 1)
                 {
-                    //inv[i].HUDSlot.icon.sprite = null;
-                    //inv[i].HUDSlot.count.text = null;
-                    //inv[i].HUDSlot.icon.enabled = false;
+                    inv[i].HUDSlot.icon.sprite = null;
+                    inv[i].HUDSlot.count.text = null;
+                    inv[i].HUDSlot.icon.enabled = false;
+                    inv[i].itemType = null;
+                    if(i == selectedIndex)
+                    {
+                        // If we are holding null block, remove from hand
+                        Destroy(currentTool);
+                    }
                 }
             }
             else
