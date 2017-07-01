@@ -82,21 +82,23 @@ public class Modify : MonoBehaviour
                 //EditTerrain.SetBlock(hit, new BlockSand());
                 // Get block to the side which faces the player
                 //EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
-                
-                if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.grass)
+                if (GetComponent<InventoryManager>().currentTool)
                 {
-                    EditTerrain.SetSideBlock(hit, new BlockGrass(), false, true);
-                    GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
-                }
-                else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.sand)
-                {
-                    EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
-                    GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
-                }
-                else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.wood)
-                {
-                    EditTerrain.SetSideBlock(hit, new BlockWood(), false, true);
-                    GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
+                    if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.grass)
+                    {
+                        EditTerrain.SetSideBlock(hit, new BlockGrass(), false, true);
+                        GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
+                    }
+                    else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.sand)
+                    {
+                        EditTerrain.SetSideBlock(hit, new BlockSand(), false, true);
+                        GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
+                    }
+                    else if (GetComponent<InventoryManager>().currentTool.GetComponent<Item>().type == Item.Items.wood)
+                    {
+                        EditTerrain.SetSideBlock(hit, new BlockWood(), false, true);
+                        GetComponent<InventoryManager>().inv[GetComponent<InventoryManager>().selectedIndex].count--;
+                    }
                 }
             }
         }

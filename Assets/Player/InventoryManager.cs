@@ -84,9 +84,11 @@ public class InventoryManager : MonoBehaviour
                 break;
             }
         }
-        index = -1;
+        //index = -1;
         if(index > -1)
+        {
             inv[index].count++;
+        }
         else
         {
             // Else find first empty slot and add new item
@@ -263,7 +265,7 @@ public class InventoryManager : MonoBehaviour
                 inventoryStorage.SetActive(false);
                 isStorageEnabled = false;
                 Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.Confined;
                 GetComponent<UnityStandardAssets.Characters.FirstPerson.Player>().enabled = true;
             }
         }
